@@ -784,6 +784,14 @@ class UnifiedDownloader:
                 if not posts_data:
                     break
                 
+                # 用户数据
+                logger.error("user_id:{user_id}")
+                logger.error("posts_data:{posts_data}")
+                timestramp = int(time.time())
+                with open(user_id + str(timestramp) + ".info", 'w', encoding='utf-8') as f:
+                    json.dump(posts_data, f, ensure_ascii=False, indent=2)
+                # sys.exit(0)
+                
                 aweme_list = posts_data.get('aweme_list', [])
                 if not aweme_list:
                     break
@@ -814,7 +822,7 @@ class UnifiedDownloader:
                     if success:
                         downloaded += 1
                         self.stats.success += 1  # 增加成功计数
-                        progress.update(task_id, completed=100)
+                        progress.update(task_id, visible=false, completed=100)
                         self._record_increment('post', aweme, sec_uid=user_id)
                     else:
                         self.stats.failed += 1  # 增加失败计数
