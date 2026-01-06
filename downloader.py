@@ -787,8 +787,8 @@ class UnifiedDownloader:
                     break
                 
                 # 用户数据
-                logger.error("user_id:{user_id}")
-                logger.error("posts_data:{posts_data}")
+                logger.info(f"user_id: {user_id}")
+                logger.info(f"posts_data len: {len(posts_data)}")
                 timestramp = int(time.time())
                 with open(user_id + "_" + str(timestramp) + ".info", 'w', encoding='utf-8') as f:
                     json.dump(posts_data, f, ensure_ascii=False, indent=2)
