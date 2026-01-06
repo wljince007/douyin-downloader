@@ -74,8 +74,11 @@ class CookieExtractor:
             try:
                 # 访问抖音登录页
                 console.print("\n[cyan]正在打开抖音登录页面...[/cyan]")
-                await page.goto('https://www.douyin.com', wait_until='networkidle')
-                
+                try:
+                    await page.goto('https://www.douyin.com', wait_until='networkidle')
+                except Exception:
+                    pass
+
                 # 等待用户登录
                 console.print("\n[yellow]请在浏览器中完成登录操作[/yellow]")
                 console.print("[dim]登录方式：[/dim]")
