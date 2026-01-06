@@ -602,6 +602,7 @@ class UnifiedDownloader:
                 # 下载视频（无水印）
                 video_url = self._get_no_watermark_url(video_info)
                 if video_url:
+                    logger.info(f"no_watermark_url video_url: {video_url}")
                     file_path = save_dir / f"{folder_name}.mp4"
                     if await self._download_file(video_url, file_path):
                         logger.info(f"下载视频: {file_path.name}")
@@ -638,6 +639,7 @@ class UnifiedDownloader:
         """获取无水印视频URL"""
         try:
             # 优先使用play_addr_h264
+            logger.info(f"_get_no_watermark_url video_info: {video_info}")
             play_addr = video_info.get('video', {}).get('play_addr_h264') or \
                        video_info.get('video', {}).get('play_addr')
             
@@ -788,7 +790,7 @@ class UnifiedDownloader:
                 logger.error("user_id:{user_id}")
                 logger.error("posts_data:{posts_data}")
                 timestramp = int(time.time())
-                with open(user_id + str(timestramp) + ".info", 'w', encoding='utf-8') as f:
+                with open(user_id + "_" + str(timestramp) + ".info", 'w', encoding='utf-8') as f:
                     json.dump(posts_data, f, ensure_ascii=False, indent=2)
                 # sys.exit(0)
                 
@@ -822,7 +824,7 @@ class UnifiedDownloader:
                     if success:
                         downloaded += 1
                         self.stats.success += 1  # 增加成功计数
-                        progress.update(task_id, visible=false, completed=100)
+                        progress.update(task_id, visible=False, completed=100)
                         self._record_increment('post', aweme, sec_uid=user_id)
                     else:
                         self.stats.failed += 1  # 增加失败计数
